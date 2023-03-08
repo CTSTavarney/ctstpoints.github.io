@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#909090">
+<meta name="description" content="Country Two Step Tour (CTST) Points Database Search">
+<title>CTST Points</title>
+<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="index.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<script async src="index.js"></script>
+</head>
+<body>
+  <div id="apple-mobile-web-app-status-bar"></div>
+  <div id="content">
+    <h2 class="centerText">CTST &ndash; Points Search</h2>
+    <div id="topContainer">
+      <div id="buttonContainerId">
+          <button type="button" id="competitorsButtonId" value="competitors"
+            title="Display List of All Competitors">Competitors</button>
+          <button type="button" id="eventsButtonId" value="events"
+            title="Display List of All Events">Events</button>
+          <button type="button" id="pointsButtonId" value="points"
+            title="Display List of Point Leaders for Each Year">Rankings</button>
+          <a href="more.html"><span id="bulletsId">&#x2022;&#x2022;&#x2022;</span></a>
+        </div>
+      <div id="searchContainerId">
+        <input
+          id="searchId"
+          type="search"
+          name="searchName"
+          size="30"
+          spellcheck="false"
+          placeholder="Select a category above ..."
+          title="Enter a search string, then click an entry in the list"
+          disabled>
+      </div>
+      <hr>
+    </div>
+    <div id="bottom">
+      <div id="currentListContainerId"></div>
+    </div>
+  </div>
+</body>
+</html>
