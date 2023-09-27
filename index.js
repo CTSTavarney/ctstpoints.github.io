@@ -35,7 +35,10 @@ class CategoryManager {
         // primarily so that the browser Back button works
     
         let searchValue = sessionStorage.getItem('searchValue') || '';
-        let categoryName = sessionStorage.getItem('categoryName') || '';
+
+        // If no category has yet been saved, select the Competitors category as the default
+        //let categoryName = sessionStorage.getItem('categoryName') || '';
+        let categoryName = sessionStorage.getItem('categoryName') || 'competitors';
 
         // Reset the search input field if no Category was saved,
         // otherwise use the category name as a placeholder in the search field
