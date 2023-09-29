@@ -158,11 +158,11 @@ a:visited {
 }
 
 .dataframe td, .dataframe th {
-    padding-right: 0.1rem;
+    padding-right: 1rem;
 }
 
-@media only screen and (min-device-width: 414px) and (orientation: portrait) {
+@media only screen and (max-device-width: 414px) and (orientation: portrait) {
     .dataframe td, .dataframe th {
-        padding-right: 1rem;
+        padding-right: 0.1rem;
     }
 }
