@@ -2,7 +2,7 @@
     "id": "/",
     "name": "CTST Points",
     "short_name": "CTST",
-    "description": "Country Two Step Tour (CTST) Points Search",
+    "description": "Country Two Step Tour (CTST) Points Registry",
     "start_url": "./",
     "scope": ".",
     "icons": [

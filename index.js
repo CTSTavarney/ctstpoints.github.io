@@ -26,9 +26,13 @@ class CategoryManager {
         // A single search input field will be used to search the current Category's index list
         this._searchDom = document.getElementById('searchId');
 
-        // Instantiate Category objects
-        for (const { name, fnamePrefix } of categoryList) {
-            this._categoryObjectList.set(name, new Category(name, fnamePrefix));
+        // Instantiate Category objects, using the first Category object as the default
+        let defaultCategoryName = '';
+        for (const { name, fnamePrefix, placeholder } of categoryList) {
+            if (!defaultCategoryName) {
+                defaultCategoryName = name;
+            }
+            this._categoryObjectList.set(name, new Category(name, fnamePrefix, placeholder));
         }
 
         // sessionStorage is used to keep track of the currently-selected Category and search input value,
@@ -36,21 +40,18 @@ class CategoryManager {
     
         let searchValue = sessionStorage.getItem('searchValue') || '';
 
-        // If no category has yet been saved, select the Competitors category as the default
-        //let categoryName = sessionStorage.getItem('categoryName') || '';
-        let categoryName = sessionStorage.getItem('categoryName') || 'competitors';
+        // If no category has yet been saved, select the first category as the default
+        let categoryName = sessionStorage.getItem('categoryName') || defaultCategoryName;
 
-        // Reset the search input field if no Category was saved,
-        // otherwise use the category name as a placeholder in the search field
+        // Reset the search input field if no Category was saved
         if (!categoryName) {
-            this._searchDom.placeholder = 'Select a category above ...';
             searchValue = '';
             try { sessionStorage.setItem('searchValue', ''); }
                 catch (error) { console.error('Unable to write to sessionStorage:', error); }
         }
-        else {
-            this._searchDom.placeholder = `Search ${categoryName} ...`;
-        }
+
+        // For now, clear the placeholder text; it will be set when the Category data is loaded
+        this._searchDom.placeholder = '';
 
         // Restore any saved search input value
         this._searchDom.value = searchValue;
@@ -78,7 +79,6 @@ class CategoryManager {
                 me._searchDom.value = '';
                 try { sessionStorage.setItem('searchValue', ''); }
                     catch (error) { console.error('Unable to write to sessionStorage:', error); }
-                me._searchDom.placeholder = `Search ${categoryName} ...`;
 
                 // Load the category
                 me._loadCategory(categoryName);
@@ -129,6 +129,9 @@ class CategoryManager {
             }
             this._currentListContainerDom.appendChild(this._currentCategoryObject.getCategoryListContainerId);
 
+            // Set the placeholder text in the search box
+            this._searchDom.placeholder = this._currentCategoryObject.getCategoryPlaceholder;
+
             // Enable the search box
             this._searchDom.disabled = false;
 
@@ -144,16 +147,18 @@ class Category {
     /* Private properties:
         _categoryName
         _fnamePrefix
+        _placeholder
         _categoryListContainerDom
         _categoryDomList
         _categorySearchList
         _buttonDom
     */
 
-    constructor(categoryName, fnamePrefix) {
+    constructor(categoryName, fnamePrefix, placeholder) {
 
         this._categoryName = categoryName;
         this._fnamePrefix = fnamePrefix;
+        this._placeholder = placeholder;
 
         // Will be the child element of currentListContainerId if this is the currently-selected category
         this._categoryListContainerDom = document.createElement('div');
@@ -172,6 +177,10 @@ class Category {
 
     get getCategoryListContainerId() {
         return this._categoryListContainerDom;
+    }
+    
+    get getCategoryPlaceholder() {
+        return this._placeholder;
     }
 
     get getCategoryButton() {
@@ -266,8 +275,8 @@ class Category {
     // First, sanitize the user's search box input text,
     // which will result in a list of sanitized words, e.g: "  John-Boy,Mc'Smith  " becomes ["johnboy", "mcsmith"]
     // Then, check that each of the sanitized input words is contained within at least one of the search words
-    // If so, return true. E.g. isMatch("  Joh,Mc'Smi  ", ["mc", "smith", "johnboy"]) is a match,
-    // since the sanitized input becomes ["joh", "mc", "smi"]
+    // If so, return true. E.g. isMatch("  Joh,Mc'Smi  ", ["mcsmith", "johnboy"]) is a match,
+    // since the sanitized input becomes ["joh", "mcsmi"]
     //
     _isMatch(inputText, searchWords) {
         const inputWords = this._searchSanitize(inputText);
@@ -322,8 +331,8 @@ window.addEventListener('load', () => {
     */
 
     new CategoryManager([
-        {name: 'competitors',   fnamePrefix: 'c-'},
-        {name: 'events',        fnamePrefix: 'e-'},
-        {name: 'points',        fnamePrefix: 'p-'},
+        {name: 'competitors', fnamePrefix: 'c-', placeholder: 'Filter by Name and/or Number ...'},
+        {name: 'events',      fnamePrefix: 'e-', placeholder: 'Filter by Event and/or Year ...'},
+        {name: 'points',      fnamePrefix: 'p-', placeholder: 'Filter by Year ...'},
     ]);
 });
