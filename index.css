@@ -11,7 +11,9 @@
     --color-button-hover: #cbe0f3;
     --color-button-selected-background: #248ae5;
     --color-button-selected-text: #d5f1ff;
+    --color-home-link: #3d4fe5;
     --color-status-bar: #444;
+    --color-table-border: #854f86;
 }
 
 html {
@@ -81,7 +83,7 @@ h3 {
 }
 
 #home a {
-    color: #3d4fe5;
+    color: var(--color-home-link);
 }
 
 .centerText {
@@ -156,6 +158,26 @@ a:visited {
 #facebookImg {
     width: 2rem;
     height: 2rem;
+}
+
+.tableNoBorders {
+    border: none;
+}
+
+table.tableIn1Out1Borders,
+.tableIn1Out1Borders td, .tableIn1Out1Borders th,
+.tableIn1Out2Borders td, .tableIn1Out2Borders th {
+    border: 1px solid var(--color-table-border);
+}
+
+table.tableIn1Out2Borders {
+    border: 2px solid var(--color-table-border);
+}
+
+.stickyTableHeader th {
+    position: sticky;
+    top: 0;
+    background-color: var(--color-bg);
 }
 
 
