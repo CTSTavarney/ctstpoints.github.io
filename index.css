@@ -14,6 +14,7 @@
     --color-home-link: #3d4fe5;
     --color-status-bar: #444;
     --color-table-border: #854f86;
+    --color-table-header: lightblue;
 }
 
 html {
@@ -31,7 +32,7 @@ body {
     color: var(--color-text);
 }
 
-#apple-mobile-web-app-status-bar {
+#appleMobileWebAppStatusBarId {
     position: sticky;
     top: 0;
     width: 100%;
@@ -39,13 +40,13 @@ body {
     background-color: var(--color-status-bar);
 }
 
-#bottom {
+#bottomId {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#content {
+#contentId {
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -53,7 +54,7 @@ body {
   row-gap: 0.5rem;
 }
 
-#topContainer {
+#topContainerId {
     position: sticky;
     top: env(safe-area-inset-top);
     width: 100%;
@@ -76,22 +77,18 @@ h3 {
     margin-bottom: 0.5rem;
 }
 
-#home {
+#homeId {
     font-size: 3rem;
     text-align: center;
     line-height: 2.5rem;
 }
 
-#home a {
+#homeId a {
     color: var(--color-home-link);
 }
 
 .centerText {
     text-align: center;
-}
-
-table {
-    border-collapse: collapse;
 }
 
 .listItem {
@@ -155,31 +152,37 @@ a:visited {
   height: 2rem;
 }
 
-#facebookImg {
+#facebookImgId {
     width: 2rem;
     height: 2rem;
+}
+
+table {
+    border-collapse: collapse;
 }
 
 .tableNoBorders {
     border: none;
 }
 
-table.tableIn1Out1Borders,
-.tableIn1Out1Borders td, .tableIn1Out1Borders th,
-.tableIn1Out2Borders td, .tableIn1Out2Borders th {
+.tableInnerBorders td, .tableInnerBorders th {
     border: 1px solid var(--color-table-border);
 }
 
-table.tableIn1Out2Borders {
-    border: 2px solid var(--color-table-border);
-}
-
-.stickyTableHeader th {
+.tableStickyHeader th {
     position: sticky;
     top: 0;
-    background-color: var(--color-bg);
 }
 
+table.tableColoredHeader {
+    border: hidden;
+    border-bottom: 1px solid var(--color-table-border);
+}
+
+.tableColoredHeader thead, .tableColoredHeader th {
+    background-color: var(--color-table-header);
+    border-style: hidden !important;
+}
 
 /* Give extra space width-wise if used on a screen larger than an iPhone 7 Plus */
 .dataframe td, .dataframe th {
