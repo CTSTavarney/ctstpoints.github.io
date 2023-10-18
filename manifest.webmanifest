@@ -1,28 +1,42 @@
 {
-    "id": "/",
-    "name": "CTST Points",
-    "short_name": "CTST",
-    "description": "Country Two Step Tour (CTST) Points Registry",
-    "start_url": "./",
-    "scope": ".",
-    "icons": [
-        {
-            "src": "icons/android-chrome-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "icons/maskable-icon-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "maskable"
-        }
-    ],
-    "background_color": "#909090",
-    "theme_color": "#909090",
-    "display": "standalone",
-    "dir": "auto",
-    "orientation": "any",
-    "lang": "en"
+  "id": "/",
+  "name": "CTST Points",
+  "short_name": "CTST",
+  "description": "Country Two Step Tour (CTST) Points Registry",
+  "start_url": "./",
+  "scope": ".",
+  "icons": [
+    {
+      "src": "icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/maskable-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/screenshot-960x540.png",
+      "type": "image/png",
+      "sizes": "960x540",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "icons/screenshot-1920x1080.png",
+      "type": "image/png",
+      "sizes": "1920x1080",
+      "form_factor": "wide"
+    }
+  ],
+  "background_color": "#909090",
+  "theme_color": "#909090",
+  "display": "standalone",
+  "dir": "auto",
+  "orientation": "any",
+  "lang": "en"
 }

@@ -1,6 +1,6 @@
 # Country Two Step Tour - Points Registry
 
-This is the web site for the CTST Points Registry project, deployed to GitHub Pages.
+This is the web site for the CTST Points Registry project, deployed to [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages).
 
 The site is running live at: https://ctstpoints.github.io
 

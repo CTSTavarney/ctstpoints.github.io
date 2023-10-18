@@ -37,7 +37,7 @@ class CategoryManager {
 
         // sessionStorage is used to keep track of the currently-selected Category and search input value,
         // primarily so that the browser Back button works
-    
+
         let searchValue = sessionStorage.getItem('searchValue') || '';
 
         // If no category has yet been saved, select the first category as the default
@@ -60,7 +60,7 @@ class CategoryManager {
         const me = this;
 
         // Handle click events on any of the buttons in the button container
-        // Use the button's "value" attribute to determine which button was clicked    
+        // Use the button's "value" attribute to determine which button was clicked
         this._buttonContainerDom.addEventListener('click', (e) => {
             window.scrollTo(0, 0);
             const categoryName = e.target.value || '';
@@ -91,7 +91,7 @@ class CategoryManager {
             try { sessionStorage.setItem('searchValue', searchValue); }
                 catch (error) { console.error('Unable to write to sessionStorage:', error); }
         });
-    
+
         this._searchDom.addEventListener('keyup', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -178,7 +178,7 @@ class Category {
     get getCategoryListContainerId() {
         return this._categoryListContainerDom;
     }
-    
+
     get getCategoryPlaceholder() {
         return this._placeholder;
     }
@@ -187,8 +187,18 @@ class Category {
         return this._buttonDom;
     }
 
+    _unloadData() {
+        this._categoryDomList = [];
+        this._categorySearchList = [];
+        let child = this._categoryListContainerDom.lastElementChild;
+        while (child) {
+            this._categoryListContainerDom.removeChild(child);
+            child = this._categoryListContainerDom.lastElementChild;
+        }
+    }
+
     loadData() {
-        return new Promise( (resolve, reject) => {
+        return new Promise( (resolve) => {
 
             // Don't load the data if it's already loaded
             if (this._categoryDomList.length > 0) {
@@ -197,18 +207,20 @@ class Category {
             else {
                 // Read the index file for this category type
                 fetch(`data/${this._categoryName}.json`)
-                    .then( (fetchResponse) => fetchResponse.json() )
+                    .then( (fetchResponse) => {
+                        if (fetchResponse.ok) {
+                            return fetchResponse.json();
+                        }
+                        else {
+                            console.error('fetch response is not ok:', fetchResponse);
+                            throw new Error('fetch response is not ok');
+                        }
+                    })
                     .then( (fetchResponseJson) => {
                         // Ensure the DOM and search lists are empty,
                         // in case multiple fetch requests were initiated
-                        this._categoryDomList = [];
-                        this._categorySearchList = [];
-                        let child = this._categoryListContainerDom.lastElementChild; 
-                        while (child) {
-                            this._categoryListContainerDom.removeChild(child);
-                            child = this._categoryListContainerDom.lastElementChild;
-                        }
-                        
+                        this._unloadData();
+
                         // For each item in the data list, create a DOM text node under the categoryListContainer
                         const length = fetchResponseJson.data.length;
                         for (let i = 0; i < length; i++) {
@@ -235,7 +247,14 @@ class Category {
                         }
                         resolve();
                     })
-                    .catch(error => reject(error));
+                    .catch( (error) => {
+                        console.error(error, error.message);
+                        // Don't reject, otherwise we'd get an unhandled Promise rejection.
+                        // Instead, if the data doesn't get loaded, the user will most likely just click
+                        // the button again, which will attempt to reload the data.
+                        this._unloadData();
+                        resolve();
+                    });
                 }
 
         });
@@ -321,12 +340,12 @@ class Category {
 
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
-    /* Not Currently Used -- For future implementation of PWA offline functionality
+    /* PWA offline functionality (Not Currently Used)
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw-VERSION.js');
+        navigator.serviceWorker.register('./service-worker.js');
     }
     */
 
